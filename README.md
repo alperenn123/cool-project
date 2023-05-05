@@ -14,6 +14,8 @@ This project uses env variable to configure, you should have `.env` file for cer
 
 Run the command `docker compose up --build -d && docker compose logs -f` to start the application, if it is successfull express server will be available at `localhost:3000`, application has swagger for api documentation it is accessible through `localhost:3000/api-doc`.
 
+If the application starts but endpoints are not responding, it might releated to line endings, try cloning again with `--config core.autocrlf=input` flag.
+
 Run `docker compose down` for stopping the docker containers.
 
 For local development you need to have node and npm installed, simple cd into the root of the project and do a `npm i` command.
