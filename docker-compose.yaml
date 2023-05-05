@@ -1,0 +1,30 @@
+version: '3'
+services:
+  app:
+    container_name: cool-app
+    build:
+      context: .
+    command: npm run start
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+    networks:
+      - cool-network
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - '27017:27017'
+    networks:
+      - cool-network
+
+volumes:
+  mongo-data:
+networks:
+  cool-network:
+    driver: bridge

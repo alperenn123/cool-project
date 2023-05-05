@@ -1,0 +1,104 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Compatibility API"
+  },
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "Compatibility"
+    }
+  ],
+  "paths": {
+    "/calculate-compability": {
+      "get": {
+        "tags": [
+          "Compatibility"
+        ],
+        "summary": "Calculates the compatibility between two users.",
+        "parameters": [
+          {
+            "name": "org",
+            "in": "query",
+            "description": "The organization of the user to calculate compatibility with.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "The user to calculate compatibility with.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The compatibility score between organization and user calculated and stored in DB."
+          },
+          "400": {
+            "description": "The provided request parameters were invalid."
+          },
+          "500": {
+            "description": "An unexpected error occurred while processing the request."
+          }
+        }
+      }
+    },
+    "/best-matches": {
+      "get": {
+        "tags": [
+          "Compatibility"
+        ],
+        "summary": "Returns the best matches for a given language.",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "The language to filter the matches by.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of the best matches for the given language.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "type": "string",
+                    "description": "The username of the matched user."
+                  },
+                  "org": {
+                    "type": "string",
+                    "description": "The organization of the matched user."
+                  },
+                  "language": {
+                    "type": "object",
+                    "description": "The user's proficiency in the given language.",
+                    "properties": {
+                      "{lang}": {
+                        "type": "number",
+                        "description": "The user's proficiency in the given language."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The provided request parameters were invalid."
+          },
+          "500": {
+            "description": "An unexpected error occurred while processing the request."
+          }
+        }
+      }
+    }
+  }
+}
