@@ -4,7 +4,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { connectToDb } from './db';
 import routes from './routes';
-import { rateLimitMiddleware } from './middlewares/ratelimit-middleware';
 import swaggerUi from 'swagger-ui-express';
 import * as swaggerDocument from './swagger.json';
 
@@ -18,7 +17,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(rateLimitMiddleware);
 app.use('/v1', routes);
 
 const port = process.env.PORT || 3000;

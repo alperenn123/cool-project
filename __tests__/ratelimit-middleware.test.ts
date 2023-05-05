@@ -16,13 +16,16 @@ describe('rateLimitMiddleware', () => {
   });
 
   it('should call next if requests are within limit', () => {
-    rateLimitMiddleware(req as Request, res as Response, next);
+    const rateFunction = rateLimitMiddleware();
+    rateFunction(req as Request, res as Response, next);
     expect(next).toBeCalled();
   });
 
   it('should return 429 error if requests exceed limit', () => {
+    const rateFunction = rateLimitMiddleware();
     Array.from({ length: 61 }).forEach(() => {
-      rateLimitMiddleware(req as Request, res as Response, next);
+      rateFunction(req as Request, res as Response, next);
+      rateFunction(req as Request, res as Response, next);
     });
 
     expect(res.status).toBeCalledWith(429);
