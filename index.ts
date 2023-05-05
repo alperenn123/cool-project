@@ -1,4 +1,4 @@
-import express, { Express, Request, Response, NextFunction } from 'express';
+import express, { Express } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -11,12 +11,6 @@ import * as swaggerDocument from './swagger.json';
 dotenv.config();
 
 export const app: Express = express();
-
-app.use((err: any, req: Request, res: Response, _: NextFunction) => {
-  const { status = 500, message } = err;
-  const response = { error: { status, message } };
-  res.status(status).json(response);
-});
 
 // Serve Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

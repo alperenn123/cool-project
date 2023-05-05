@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 let requests = 0;
 let resetTime: number;
+const API_LIMIT = 60;
 
 export function rateLimitMiddleware(
   _: Request,
@@ -16,7 +17,7 @@ export function rateLimitMiddleware(
 
   requests++;
 
-  if (requests > 60) {
+  if (requests > API_LIMIT) {
     return res.status(429).json({
       message: 'Too many requests. Please try again later.',
       retryAfter: resetTime - now,
